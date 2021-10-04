@@ -1,17 +1,16 @@
-import { useState, useContext } from 'react'
+import React from 'react'
 import TaskCard from "./TaskCard"
 import { tasksData } from "../data/tasksData"
+import { taskCatStateContext } from "./MainApp"
 
 const TaskEditor = () => {
 
-    const [taskDataState, setTaskDataState] = useState(tasksData)
-    // const [menuItem, setMenuItem] = useState('inbox')
-
-    const menuItem = 'inbox'
-    // inbox, today, upcoming, done, search
+    const [taskDataState, setTaskDataState] = React.useState(tasksData)
+    const [modalState, setModalState] = React.useState(false)
+    const { taskCatState } = React.useContext(taskCatStateContext)
 
     let newTasksData = taskDataState.filter((task) => {
-        switch(menuItem) {
+        switch (taskCatState) {
             case 'inbox':
                 return task.completed === false
             case 'done':
@@ -34,19 +33,60 @@ const TaskEditor = () => {
         />
     })
 
+    const addBackDrop = () => {
+        const backdrop = document.createElement('div')
+        backdrop.setAttribute('id', 'backdrop')
+        backdrop.classList.add('modal-backdrop', 'fade', 'show')
+        document.body.appendChild(backdrop)
+    }
+
+    const removeBackDrop = () => {
+        const backdrop = document.querySelector('#backdrop')
+        backdrop.remove()
+    }
+
+    const showTaskModal = () => {
+        const modalElement = document.querySelector('#add-task-modal')
+        modalElement.style.display = "block"
+    }
+
+    const hideTaskModal = () => {
+        const modalElement = document.querySelector('#add-task-modal')
+        modalElement.style.display = "none"
+    }
+
+    const toggleTaskModal = () => {
+        if (modalState === false) {
+            document.body.classList.add('modal-open')
+            addBackDrop()
+            showTaskModal()
+            setModalState(true)
+        } else {
+            document.body.classList.remove('modal-open')
+            removeBackDrop()
+            hideTaskModal()
+            setModalState(false)
+        }
+    }
+
     return (
         <div className="list-group mx-0 col-6">
             <h3>Inbox</h3>
+
             {newTasksData}
 
-            { /* MODAL BUTTON */}
-            <button id="mybutton" type="button" className="btn btn-primary my-3" data-toggle="modal"
-                data-target="#newTaskModal">
+            <button
+                id="add-task-button"
+                type="button"
+                className="btn btn-primary my-3"
+                data-toggle="modal"
+                data-target="#newTaskModal"
+                onClick={toggleTaskModal}
+            >
                 Add a new task
             </button>
 
-            { /* MODAL */}
-            <div className="modal fade" id="newTaskModal">
+            <div id="add-task-modal" className="modal fade show">
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-body">
@@ -60,8 +100,13 @@ const TaskEditor = () => {
                             </form>
                         </div>
                         <div className="modal-footer">
-                            <button id="addTaskCloseBtn" type="button" className="btn btn-secondary"
-                                data-dismiss="modal">
+                            <button
+                                id="addTaskCloseBtn"
+                                type="button"
+                                className="btn btn-secondary"
+                                data-dismiss="modal"
+                                onClick={toggleTaskModal}
+                            >
                                 Close
                             </button>
                             <button type="button" className="btn btn-primary">Add</button>

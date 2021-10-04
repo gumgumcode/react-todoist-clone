@@ -1,7 +1,6 @@
-import React, { useState } from "react"
+import React from "react"
 import TopNavBar from "./components/TopNavBar"
-import TaskCategory from "./components/TaskCategory"
-import TaskEditor from "./components/TaskEditor"
+import MainApp from "./components/MainApp"
 
 function App() {
 
@@ -9,12 +8,7 @@ function App() {
     <>
       <div id="main">
         <TopNavBar />
-        <div className="container">
-          <div className="row my-3 justify-content-center">
-            <TaskCategory />
-            <TaskEditor/>
-          </div>
-        </div>
+        <MainApp />
       </div>
     </>
   )
