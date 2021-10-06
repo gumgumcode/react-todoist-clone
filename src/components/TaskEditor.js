@@ -5,8 +5,16 @@ import { taskCatStateContext } from "./MainApp"
 
 const TaskEditor = () => {
 
+    const formData = {
+        id: '',
+        taskName: '',
+        dueDate: '',
+        completed: false
+    }
+
     const [taskDataState, setTaskDataState] = React.useState(tasksData)
     const [modalState, setModalState] = React.useState(false)
+    const [formDataState, setFormDataState] = React.useState(formData)
     const { taskCatState } = React.useContext(taskCatStateContext)
 
     let newTasksData = taskDataState.filter((task) => {
@@ -69,6 +77,22 @@ const TaskEditor = () => {
         }
     }
 
+    const handleNewTask = (e) => {
+        taskDataState.push(formDataState)
+        toggleTaskModal()
+    }
+
+    const handleFormChange = (e) => {
+        const {name, value} = e.target
+        setFormDataState(prevState => {
+            return {
+                ...prevState,
+                id: new Date().valueOf(),
+                [name]: String(value)
+            }
+        })
+    }
+
     return (
         <div className="list-group mx-0 col-6">
             <h3>Inbox</h3>
@@ -93,9 +117,17 @@ const TaskEditor = () => {
                             <form className="my-3">
                                 <h3>Add Task</h3>
                                 <div className="form-group">
-                                    <input type="text" className="form-control my-3" id="newTask"
-                                        placeholder="Add a new task" />
-                                    <input type="date" className="form-control my-3" id="newTaskDate" />
+                                    <input
+                                        type="text"
+                                        name="taskName"
+                                        className="form-control my-3" 
+                                        placeholder="Add a new task"
+                                        onChange={handleFormChange} />
+                                    <input
+                                        type="date"
+                                        name="dueDate"
+                                        className="form-control my-3"
+                                        onChange={handleFormChange} />
                                 </div>
                             </form>
                         </div>
@@ -105,11 +137,15 @@ const TaskEditor = () => {
                                 type="button"
                                 className="btn btn-secondary"
                                 data-dismiss="modal"
-                                onClick={toggleTaskModal}
-                            >
+                                onClick={toggleTaskModal} >
                                 Close
                             </button>
-                            <button type="button" className="btn btn-primary">Add</button>
+                            <button
+                                type="button"
+                                className="btn btn-primary"
+                                onClick={handleNewTask} >
+                                Add
+                            </button>
                         </div>
                     </div>
                 </div>
