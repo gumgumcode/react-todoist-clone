@@ -1,24 +1,42 @@
-import React, { useState } from 'react'
-import TaskCategory from "./TaskCategory"
-import TaskEditor from "./TaskEditor"
+import React from 'react'
+import PrimaryMenu from './menu/PrimaryMenu'
+import TaskEditor from "./task/TaskEditor"
+import TopNavBar from "./nav/TopNavBar"
 
-export const taskCatStateContext = React.createContext()
+export const AppContext = React.createContext()
 
 const MainApp = () => {
 
-    const [taskCatState, setTaskCatState] = useState('inbox')
+    const [appConfig, setAppConfig] = React.useState({
+        menu: {
+            primary: ['inbox', 'today', 'upcoming', 'done']
+        },
+        activeMenu: 'inbox',
+        displayTaskModal: false
+    })
 
     return (
+        <>
+        <TopNavBar/>
+
         <div className="container">
             <div className="row my-3 justify-content-center">
-                <taskCatStateContext.Provider
-                    value={{taskCatState, setTaskCatState}}
-                >
-                    <TaskCategory />
+
+                <AppContext.Provider 
+                    value={{
+                        appConfig,
+                        setAppConfig
+                    }} >
+
+                    <PrimaryMenu/>
+
                     <TaskEditor />
-                </taskCatStateContext.Provider>
+
+                </AppContext.Provider>
+
             </div>
         </div>
+        </>
     )
 }
 

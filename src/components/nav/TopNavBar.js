@@ -1,7 +1,6 @@
 import React from "react";
-import SearchBar from "./SearchBar";
 
-const TopNavBar = () => {
+const TopNavBar = ({children}) => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
@@ -17,7 +16,7 @@ const TopNavBar = () => {
             </li>
           </ul>
         </div>
-        <SearchBar />
+        {children}
       </div>
     </nav>
   );

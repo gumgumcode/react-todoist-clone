@@ -1,5 +1,4 @@
 import React from "react";
-// import { taskCatStateContext } from "./MainApp";
 
 const TaskCard = ({ taskDetails, setTaskDataState }) => {
     const { id, taskName, dueDate, completed } = taskDetails;
@@ -10,9 +9,7 @@ const TaskCard = ({ taskDetails, setTaskDataState }) => {
         textDecoration: "line-through"
     }
 
-    // const [taskCatState, ] = React.useContext(taskCatStateContext)
     const handleChange = (e) => {
-        // console.log(taskCatState)
         setTaskDataState((prevState) => {
             const newTasks = prevState.map(task => {
                 if (task.id === Number(e.target.name)) {

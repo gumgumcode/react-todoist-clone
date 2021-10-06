@@ -1,6 +1,6 @@
 import React from 'react'
 
-const SearchBar = () => {
+const Search = () => {
     return (
         <form className="d-flex">
             <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
@@ -11,4 +11,4 @@ const SearchBar = () => {
     )
 }
 
-export default SearchBar
+export default Search
