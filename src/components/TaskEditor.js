@@ -78,13 +78,10 @@ const TaskEditor = () => {
     }
 
     const handleNewTask = (e) => {
-        // setFormDataState(prevState => {
-        //     return {
-        //         ...prevState,
-        //         id: new Date().valueOf(),
-        //     }
-        // })
-        taskDataState.push(formDataState)
+        taskDataState.push({
+            ...formDataState,
+            id: new Date().valueOf()
+        })
         toggleTaskModal()
         setFormDataState(formData)
     }
@@ -94,7 +91,6 @@ const TaskEditor = () => {
         setFormDataState(prevState => {
             return {
                 ...prevState,
-                id: new Date().valueOf(),
                 [name]: String(value),
                 completed: taskCatState === 'done' ? true : false
             }
