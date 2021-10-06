@@ -23,6 +23,15 @@ const TaskCard = ({ taskDetails, setTaskDataState }) => {
             return newTasks
         })
     }
+
+    const handleDelete = (e) => {
+        setTaskDataState((prevState) => {
+            return prevState.filter(task => {
+                return task.id !== Number(e.target.name)
+            })
+        })
+    }
+
     return (
         <label className="list-group-item d-flex gap-2">
             <input
@@ -40,10 +49,17 @@ const TaskCard = ({ taskDetails, setTaskDataState }) => {
                 </small>
             </span>
             <span style={{ marginLeft: "auto" }}>
-                <button type="button" className="btn btn-secondary mx-2">
+                <button 
+                    type="button"
+                    name={`${id}`} 
+                    className="btn btn-secondary mx-2">
                     Edit
                 </button>
-                <button type="button" className="btn btn-secondary">
+                <button 
+                    type="button"
+                    name={`${id}`} 
+                    className="btn btn-secondary"
+                    onClick={handleDelete}>
                     Delete
                 </button>
             </span>

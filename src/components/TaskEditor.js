@@ -78,17 +78,25 @@ const TaskEditor = () => {
     }
 
     const handleNewTask = (e) => {
+        // setFormDataState(prevState => {
+        //     return {
+        //         ...prevState,
+        //         id: new Date().valueOf(),
+        //     }
+        // })
         taskDataState.push(formDataState)
         toggleTaskModal()
+        setFormDataState(formData)
     }
 
     const handleFormChange = (e) => {
-        const {name, value} = e.target
+        const { name, value } = e.target
         setFormDataState(prevState => {
             return {
                 ...prevState,
                 id: new Date().valueOf(),
-                [name]: String(value)
+                [name]: String(value),
+                completed: taskCatState === 'done' ? true : false
             }
         })
     }
@@ -120,13 +128,15 @@ const TaskEditor = () => {
                                     <input
                                         type="text"
                                         name="taskName"
-                                        className="form-control my-3" 
+                                        className="form-control my-3"
                                         placeholder="Add a new task"
+                                        value={formDataState.taskName}
                                         onChange={handleFormChange} />
                                     <input
                                         type="date"
                                         name="dueDate"
                                         className="form-control my-3"
+                                        value={formDataState.dueDate}
                                         onChange={handleFormChange} />
                                 </div>
                             </form>
