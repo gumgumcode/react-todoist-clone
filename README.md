@@ -13,6 +13,7 @@ Done
 
 Pending
 
+- [ ] Edit task function
 - [ ] Today page
 - [ ] Upcoming page
 - [ ] Reverse chronological order of tasks
